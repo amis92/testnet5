@@ -3,27 +3,18 @@
     static void Main(string[] args)
     {
         System.Console.WriteLine(System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription);
-        X();
+        Bug();
     }
 
-    static void X() => new MyListNode();
+    static void Bug() => new B();
 }
 
-class Node { }
-
-struct NodeList<T> where T : Node
+abstract class A<T>
 {
-    public static implicit operator NodeList<Node>(NodeList<T> nodeList) => new NodeList<Node>();
+    public abstract A<T> M();
 }
 
-abstract class ListNode<T> where T : Node
+class B : A<string>
 {
-    public abstract ListNode<T> WithNodes(NodeList<T> nodes);
-}
-
-class MyNode : Node { }
-
-class MyListNode : ListNode<MyNode>
-{
-    public override MyListNode WithNodes(NodeList<MyNode> nodes) => new MyListNode();
+    public override B M() => new B();
 }
